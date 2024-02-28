@@ -22,25 +22,6 @@ def pandas_type_to_sql(pandas_type, col_name):
 
 def populate_supabase_table(df,dataset_name, engine):
 
-    # Raw SQL COPY command
-    # copy_sql = f"""
-    # COPY {dataset_name} FROM '{dataset_name}.csv' DELIMITER ',' CSV HEADER;
-    # """
-#     copy_sql = f"""
-# COPY {dataset_name} FROM stdin WITH CSV HEADER DELIMITER as ',';
-# """
-    
-#     csv_file_path = dataset_name + ".csv"
-
-#     with engine.begin() as connection:
-#         # Execute COPY command
-#         # connection.execute(copy_sql)
-#         cursor = connection.cursor()
-#         # cursor.copy_export()
-#         with open(csv_file_path, 'r') as file:
-#             cursor.copy_expert(sql=copy_sql, file=f)
-#             connection.commit()
-
     df.to_sql(dataset_name, con=engine, if_exists='append', index=False, method='multi')
 
 def create_supabase_table(df, table_name, engine):
@@ -56,54 +37,11 @@ def create_supabase_table(df, table_name, engine):
 
     statement = text(create_table_sql)
 
-    # Execute SQL to create table
-    # connection = engine.connect()
-    # connection.execute(statement)
     with engine.connect() as connection:
         print(f"Start connection attempt")
         connection.execute(drop_statement)
         connection.execute(statement)
         connection.commit()
-
-
-        # connection.execute(create_table_sql)
-    # engine.execute(create_table_sql)
-    # response = supabase.raw(create_table_sql).execute()
-
-    # # # Check for errors in table creation
-    # # if response.error:
-    # #     print(f"Error in table creation: {response.error}")
-    # # else:
-    # #     print("Table created or already exists")
-
-    # # Convert DataFrame to list of dictionaries
-    # data = df.to_dict(orient='records')
-
-    # print(data)
-
-    # # Insert data into the database
-    # with engine.connect() as connection:
-    #     # Using the connection to begin a transaction
-    #     with connection.begin() as transaction:
-    #         try:
-    #             connection.execute(MyTable.__table__.insert(), data)
-    #             # Commit the transaction if no errors
-    #             transaction.commit()
-    #             print("Data inserted successfully")
-    #         except:
-    #             # Rollback the transaction in case of error
-    #             transaction.rollback()
-    #             print(f"Error in data insertion")
-    #             raise
-
-    # # Insert data into your Supabase table
-    # response = supabase.table(table_name).insert(data).execute()
-
-    # # Check for errors in data insertion
-    # if response.error:
-    #     print(f"Error in data insertion: {response.error}")
-    # else:
-    #     print("Data inserted successfully")
 
 with open('.env') as file:
     for line in file:
