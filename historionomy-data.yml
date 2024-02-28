@@ -1,0 +1,21 @@
+world_historionomic_stage:
+  countries:
+    columns: A2:J
+    custom_header: True
+    header: [alpha_3,country,civ,stage,label,'percent_confiance',priorité,reboot,subEntities,notes]
+  legend:
+    columns: Q:R
+historionomic_stages:
+  labels:
+    columns: A:I
+# stages_over_time:
+#   stages:
+#     columns: A:Z
+koinon:
+  koinons:
+    columns: A2:G
+    custom_header: True
+    header: [alpha_3,country,koinon turc,koinon latino américain,"Greater India","Eretz Israel"]
+countries_historionomic_history:
+  history:
+    columns: A:U
